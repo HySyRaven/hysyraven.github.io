@@ -1,5 +1,9 @@
 const body = document.querySelector('body');
-
+const audio = document.querySelector('.bagAudio');
+const audio2 = document.querySelector('.bagAudio2');
+const audio3 = document.querySelector('.bagAudio3');
+const audio4 = document.querySelector('.bagAudio4');
+const audio5 = document.querySelector('.bagAudio5');
 
 document.addEventListener("DOMContentLoaded", () => {
   const message = document.querySelector('p.message');
@@ -7,6 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
       message.textContent = messageArray[Math.floor(Math.random() * messageArray.length)];
   }
 });
+
+
+
+
 // Text list
 const messageArray = [
   "I insta-stalk my ex's pet." ,
@@ -17,21 +25,63 @@ const messageArray = [
   "His mom said I was the best thing to ever happen to him." , 
   "I stil own them $34.50. It's not the money, it's the *principle*." , 
   "My brother became bestfriends with my ex. I see him sometimes when I get home from work." ,
-
-
-
+  "I liked one of their instagram post from 2016...who didn't love 2016...right?" , 
+  "I rewatch our old Schapchat memories for research purposes." , 
+  "My Netflix password is still our names." ,
+  "I started listening to the Beatles because he was obsessed with them. I still love them." , 
+  "I text during sex." ,
+  "I quit my job and faked that I had to move to end my relationship." ,
+  "I regifted my exes' presents to my girlfriend." , 
+  "I still check their instagram page." ,
+  "I've blocked and and unblocked them for the last 4 years since we brokeup." , 
+  "I lost my virginity on my exes's birthday." , 
+  "They can be very loud very suddenly and it stresses me out." , 
+  "We're still friends on Costar." ,
+  "Tiktok always recommends my ex's account under 'people you may know'." ,
+  "My mom was really mad when she found out I brokeup with my boyfriend. The support is zeroooo." ,
+  "My bestfriend comforted my ex after I broke up with them." ,
+  "I re-read our final messages and think of better responses I could've had." , 
+  "He sent me a letter after we broke up and I still kept it." ,
+  "I avoid listening to the songs we used to share with each other to escape the memories." ,
+  "The moon reminds me of them." ,
+  "They left me for someone who inexplicably hated me with no warning, for no apparent reason." ,
+  "I can't see a gray Prius anywhere without my heart droppng."
 ]
 
-// Object array and images
+
+
+
 const objectArray = [
   { src: 'glasses.png', size: 590 },
-  { src: 'lipstick.png', size: 375 },
-  { src: 'wallet.png', size: 490 },
+  { src: 'lipstick.png', size: 370 },
+  { src: 'condom.png', size: 200 },
+  { src: 'wallet.png', size: 455 },
   { src: 'airpod1.png', size: 330 },
   { src: 'airpod2.png', size: 190 },
   { src: 'keys.png', size: 575 },
-  { src: 'clip.png', size: 530 },
-  { src: 'inhaler.png', size: 280 }
+  { src: 'clip.png', size: 500 },
+  { src: 'inhaler.png', size: 280 },
+  { src: 'lighter.png', size: 200 },
+  { src: 'brush.png', size: 660 },
+  { src: 'scrunchie.png', size: 340 },
+  { src: 'birthControl.png', size: 350 },
+  { src: 'gum.png', size: 250 },
+  { src: 'handCream.png', size: 280 },
+  { src: 'mascara.png', size: 420}, 
+  { src: 'sanitizer.png', size: 290},
+  { src: 'passport.png', size: 380},
+  { src: 'nailPolish.png', size: 220},
+  { src: 'keychain.png', size: 180},
+  { src: 'chapstick.png', size: 250},
+  { src: 'charger.png', size: 400},
+  { src: 'pillBox.png', size: 240},
+  { src: 'crackers.png', size: 200},
+  { src: 'pen.png', size: 330},
+  { src: 'pepperSpray.png', size: 240},
+
+  
+
+
 ];
 
 let mouse = { x: 0, y: 0, radius: 75 }; // Mouse interaction
@@ -52,11 +102,13 @@ function shuffleArray(array) {
 function placeObjects() {
   shuffleArray(objectArray); 
 
-  objectArray.forEach((obj) => {
+  const objectsToDisplay = objectArray.slice(0,12);
+
+  objectsToDisplay.forEach((obj) => {
     const img = document.createElement('img');
     img.src = obj.src;
     img.style.width = `${obj.size}px`; 
-    img.style.height = `${obj.size}px`; 
+    img.style.height = 'auto';
     img.style.position = 'absolute';
 
     const object = {
@@ -78,20 +130,68 @@ function placeObjects() {
   });
 }
 
-// move away from mouse
+
+
+
+// Audio
+let lastPlayedAudio = null; // Track the last played audio
+
+function playRandomAudio() {
+  const audioFiles = [audio, audio2, audio3, audio4, audio5];
+
+  let chosenAudio;
+  do {
+    chosenAudio = audioFiles[Math.floor(Math.random() * audioFiles.length)];
+  } while (chosenAudio === lastPlayedAudio); // Ensure it's not the last played audio
+
+  lastPlayedAudio = chosenAudio; // Update last played
+
+  if (chosenAudio) {
+    chosenAudio.volume = Math.random() * 0.9 + 0.1; 
+    chosenAudio.playbackRate = Math.random() * 0.3 + 0.7; // Random speed between 0.8x and 1.2x
+    chosenAudio.play();
+  }
+}
+/*function playRandomAudio() {
+  const audioFiles = [audio, audio2, audio3, audio4, audio5]; 
+  const chosenAudio = audioFiles[Math.floor(Math.random() * audioFiles.length)]; 
+  
+  if (chosenAudio) {
+    //chosenAudio.currentTime = 0; // Restart the audio from the beginning
+    chosenAudio.play(); 
+  }
+} */
+
+  /*function playAudio() {
+    if (audio) {
+      //audio.currentTime = 0; // Reset the audio to start from the beginning
+      audio.play(); // Play the audio
+  
+    }
+  }*/
+
+
+
+
+// mouse interaction stuff
 function updateObjects() {
   objects.forEach((obj) => {
     const dx = obj.x + obj.width / 2 - mouse.x; 
     const dy = obj.y + obj.height / 2 - mouse.y; 
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    
     if (distance < mouse.radius) {
       const angle = Math.atan2(dy, dx);
       const force = (mouse.radius - distance) / mouse.radius;
+
+      // Move object away from mouse
       obj.dx += Math.cos(angle) * force * pushStrength;
       obj.dy += Math.sin(angle) * force * pushStrength;
       obj.rotation += Math.cos(angle) * force * pushStrength;
+
+      // Play random audio when object is close to the mouse
+      playRandomAudio();
+      //playAudio();
     }
 
     
